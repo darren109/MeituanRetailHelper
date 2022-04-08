@@ -21,11 +21,13 @@ import top.shixinzhang.food.util.Helper;
 public class GrabService extends AccessibilityService {
     public final String TAG = getClass().getSimpleName();
     public static final String PACKAGE_MEITUAN = "com.meituan.retail.v.android";
+    public static boolean en = true;
 
     final List<Integer> supportEventTypes = Arrays.asList(
             AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED,
             AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED,
-            AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED, AccessibilityEvent.TYPE_VIEW_CLICKED
+            AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED,
+            AccessibilityEvent.TYPE_VIEW_CLICKED
     );
 
     public interface IGrabHandler {
@@ -42,6 +44,7 @@ public class GrabService extends AccessibilityService {
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
+        if (!en) return;
         if (!supportEventTypes.contains(event.getEventType())) {
             return;
         }

@@ -22,6 +22,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import top.shixinzhang.food.service.GrabService;
@@ -30,6 +31,8 @@ import top.shixinzhang.food.util.Helper;
 public class ScrollingActivity extends AppCompatActivity {
 
     public final String TAG = getClass().getSimpleName();
+    private TextView tvStart;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,21 +43,25 @@ public class ScrollingActivity extends AppCompatActivity {
         CollapsingToolbarLayout toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         toolBarLayout.setTitle("买菜助手（美团）");
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = findViewById(R.id.fab);
+        tvStart = findViewById(R.id.btn_start);
         fab.setOnClickListener(startClickListener);
-        findViewById(R.id.btn_start).setOnClickListener(startClickListener);
+        tvStart.setOnClickListener(startClickListener);
+        tvStart.setText(GrabService.en ? R.string.stop : R.string.start);
     }
 
     View.OnClickListener startClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
             String packageName = getTargetAppPackageName();
             if (Helper.isAccessibilitySettingsOn(ScrollingActivity.this)) {
                 if (Helper.checkAppInstalled(ScrollingActivity.this, packageName)) {
-                    Helper.startApplication(ScrollingActivity.this, packageName);
-                    Toast.makeText(ScrollingActivity.this,
-                            "开始执行！", Toast.LENGTH_LONG).show();
+                    GrabService.en = !GrabService.en;
+                    tvStart.setText(GrabService.en ? R.string.stop : R.string.start);
+                    if (GrabService.en) {
+                        Helper.startApplication(ScrollingActivity.this, packageName);
+                        Toast.makeText(ScrollingActivity.this, "开始执行！", Toast.LENGTH_LONG).show();
+                    }
                 } else {
                     Snackbar.make(view, "美团买菜未安装，请先安装！", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();

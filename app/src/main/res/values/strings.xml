@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">买菜助手</string>
-    <string name="service_name">买菜助手-开启后可帮你点击，增加买到概率</string>
+    <string name="service_name">买菜助手(美团买菜)</string>
     <string name="large_text">
         "功能介绍:\n"
         "自动完成结算、选择时间、支付以及其中的错误重试，减少人工买菜的成本，增加成功概率\n\n"
@@ -29,6 +29,7 @@
     </string>
 
     <string name="start">开始使用</string>
+    <string name="stop">停止使用</string>
     <string name="action_settings">关于作者</string>
     <string name="action_report">功能反馈</string>
     <string name="setting_desc">买菜助手：开启后可自动完成下单流程，失败后会自动重试，减少你买菜的成本</string>
