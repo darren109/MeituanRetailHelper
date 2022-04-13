@@ -48,6 +48,14 @@ public class ScrollingActivity extends AppCompatActivity {
         fab.setOnClickListener(startClickListener);
         tvStart.setOnClickListener(startClickListener);
         tvStart.setText(GrabService.en ? R.string.stop : R.string.start);
+		tvStart.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(ScrollingActivity.this, "调试模式已打开", Toast.LENGTH_SHORT).show();
+                Helper.isDebugMode = true;
+                return true;
+            }
+        });
     }
 
     View.OnClickListener startClickListener = new View.OnClickListener() {
@@ -59,8 +67,9 @@ public class ScrollingActivity extends AppCompatActivity {
                     GrabService.en = !GrabService.en;
                     tvStart.setText(GrabService.en ? R.string.stop : R.string.start);
                     if (GrabService.en) {
-                        Helper.startApplication(ScrollingActivity.this, packageName);
-                        Toast.makeText(ScrollingActivity.this, "开始执行！", Toast.LENGTH_LONG).show();
+						boolean started = Helper.startApplication(ScrollingActivity.this, packageName);
+                		String msg = started ? "开始执行！" : "请手动打开美团买菜";
+                		Toast.makeText(ScrollingActivity.this, msg, Toast.LENGTH_LONG).show();
                     }
                 } else {
                     Snackbar.make(view, "美团买菜未安装，请先安装！", Snackbar.LENGTH_LONG)
